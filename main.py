@@ -1,6 +1,6 @@
 import random
 import time
-#import numpy as np
+import numpy as np
 
 
 def mergeSort(arr):
