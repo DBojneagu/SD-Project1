@@ -154,36 +154,7 @@ def shellSort(arr):
 
         gap //= 2
 
-def countingSort(arr, exp1):
-    n = len(arr)
 
-
-    output = [0] * (n)
-
-
-    count = [0] * (10)
-
-
-    for i in range(0, n):
-        index = arr[i] // exp1
-        count[index % 10] += 1
-
-
-    for i in range(1, 10):
-        count[i] += count[i - 1]
-
-
-    i = n - 1
-    while i >= 0:
-        index = arr[i] // exp1
-        output[count[index % 10] - 1] = arr[i]
-        count[index % 10] -= 1
-        i -= 1
-
-
-    i = 0
-    for i in range(0, len(arr)):
-        arr[i] = output[i]
 
 
 def insertionSort(arr):
@@ -200,15 +171,58 @@ def insertionSort(arr):
     arr[j + 1] = key
 
 
-def radixSort(arr):
+def countingSortForRadix(inputArray, placeValue):
+    # We can assume that the number of digits used to represent
+    # all numbers on the placeValue position is not grater than 10
+    countArray = [0] * 10
+    inputSize = len(inputArray)
 
-    max1 = max(arr)
+    # placeElement is the value of the current place value
+    # of the current element, e.g. if the current element is
+    # 123, and the place value is 10, the placeElement is
+    # equal to 2
+    for i in range(inputSize):
+        placeElement = (inputArray[i] // placeValue) % 10
+        countArray[placeElement] += 1
+
+    for i in range(1, 10):
+        countArray[i] += countArray[i - 1]
+
+    # Reconstructing the output array
+    outputArray = [0] * inputSize
+    i = inputSize - 1
+    while i >= 0:
+        currentEl = inputArray[i]
+        placeElement = (inputArray[i] // placeValue) % 10
+        countArray[placeElement] -= 1
+        newPosition = countArray[placeElement]
+        outputArray[newPosition] = currentEl
+        i -= 1
+
+    return outputArray
 
 
-    exp = 1
-    while max1 / exp > 1:
-        countingSort(arr, exp)
-        exp *= 10
+def radixSort(inputArray):
+    # Step 1 -> Find the maximum element in the input array
+    maxEl = max(inputArray)
+
+    # Step 2 -> Find the number of digits in the `max` element
+    D = 1
+    while maxEl > 0:
+        maxEl /= 10
+        D += 1
+
+    # Step 3 -> Initialize the place value to the least significant place
+    placeVal = 1
+
+    # Step 4
+    outputArray = inputArray
+    while D > 0:
+        outputArray = countingSortForRadix(outputArray, placeVal)
+        placeVal *= 10
+        D -= 1
+
+    return outputArray
 
 
 def partition(start, end, array):
@@ -287,7 +301,7 @@ for teste in f:
     c +=1
     print(f"N={int(aux[0])} Max = {int(aux[1])} \n ")
     print("Sir initial ", end="\n")
-    printList(arr)
+    #printList(arr)
 
     #MergeSort
     start = time.time()
@@ -306,9 +320,9 @@ for teste in f:
     arr = aux1
     print("Timp Python Sort:", stop - start, "secunde", end="\n\n")
 
-    #RadixSort
+   #RadixSort
     start = time.time()
-    radixSort(arr)
+    arr = radixSort(arr)
     stop = time.time()
     arr = aux1
     print("Timp Radix Sort: ", stop-start , "secunde", end="\n\n")
@@ -323,6 +337,8 @@ for teste in f:
     print("Timp Heap Sort : ", stop - start, "secunde", end="\n\n")
 
     # Insertion Sort
+    arr = sorted(arr,reverse=True)
+    #Daca faci reverse=true nu mai merge atat de bine insertion sort-ul.
     start = time.time()
     insertionSort(arr)
     stop = time.time()
@@ -337,12 +353,11 @@ for teste in f:
     print("Timp Bubble Sort:", stop - start, "secunde", end="\n\n")
 
     # Quick Sort
-    if int(aux[0]) < 10000:
-         start = time.time()
-         quick_sort(0, len(arr) - 1, arr)
-         stop = time.time()
-         arr = aux1
-         print("Timp Quick Sort:", stop - start, "secunde", end="\n\n")
+   # if int(aux[0]) < 10000:
+     #    start = time.time()
+      #   quick_sort(0, len(arr) - 1, arr)
+       #  stop = time.time()
+        # print("Timp Quick Sort:", stop - start, "secunde", end="\n\n")
 
     # ShellSort
     if int(aux[0]) < 10000:
