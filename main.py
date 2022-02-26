@@ -250,12 +250,6 @@ def bubbleSort(arr):
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
 
 
-def printList(arr):
-    for i in range(len(arr)):
-        print(arr[i], end=" ")
-    print()
-
-
 c = 0
 f = open("teste.in")
 nrteste = f.readline()
@@ -270,70 +264,82 @@ for teste in f:
     # arr = list(np.random.randint(low = 0,high=int(aux[1]),size=int(aux[0])))
 
     c += 1
-    print(f"N={int(aux[0])} Max = {int(aux[1])} \n ")
-    print("Sir initial ", end="\n")
+    print(f"Test {c}\n\nN={int(aux[0])} Max = {int(aux[1])} \n ")
+
     # printList(arr)
+
+    # Built-in Sorting Algorithm
+    start = time.time()
+    arr3 = sorted(arr)
+    stop = time.time()
+    arr = aux1
+    print("Timp Python Sort:", stop - start, "secunde", end="\n\n")
 
     # MergeSort
     start = time.time()
     mergeSort(arr)
     stop = time.time()
-    arr = aux1
-    print("Sir sortat", end="\n")
-    printList(arr)
-    print()
+    if arr == arr3:
+        print(f"Correct:{arr==arr3}")
+        print()
     print("Timp Merge sort: ", stop - start, "secunde", end="\n\n")
-
-    # Built-in Sorting Algorithm
-    start = time.time()
-    arr = sorted(arr)
-    stop = time.time()
     arr = aux1
-    print("Timp Python Sort:", stop - start, "secunde", end="\n\n")
 
-    # RadixSort
     start = time.time()
-    arr = radixSort(arr)
+    radixSort(arr)
     stop = time.time()
+    if arr == arr3:
+        print(f"Correct:{arr==arr3}")
+        print()
+    print("Timp Radix sort: ", stop - start, "secunde", end="\n\n")
     arr = aux1
-    print("Timp Radix Sort: ", stop - start, "secunde", end="\n\n")
 
-    # HeapSort
     start = time.time()
     heapSort(arr)
     stop = time.time()
+    if arr == arr3:
+        print(f"Correct:{arr==arr3}")
+        print()
+    print("Timp Heap sort: ", stop - start, "secunde", end="\n\n")
     arr = aux1
-    print("Timp Heap Sort : ", stop - start, "secunde", end="\n\n")
 
-    # Insertion Sort
-    arr = sorted(arr, reverse=True)
-    # Daca faci reverse=true nu mai merge atat de bine insertion sort-ul.
     start = time.time()
     insertionSort(arr)
     stop = time.time()
-    arr = aux1
-    print("Timp Insertion : ", stop - start, "secunde", end="\n\n")
 
-    # Bubble Sort
+    if arr == arr3:
+        print(f"Correct:{arr==arr3}")
+        print()
+    print("Timp Insertion sort: ", stop - start, "secunde", end="\n\n")
+    arr = aux1
+
     start = time.time()
     bubbleSort(arr)
+
     stop = time.time()
+    if arr == arr3:
+        print(f"Correct:{arr==arr3}")
+        print()
+    print("Timp Bubble sort: ", stop - start, "secunde", end="\n\n")
     arr = aux1
-    print("Timp Bubble Sort:", stop - start, "secunde", end="\n\n")
 
-    # Quick Sort
-    # if int(aux[0]) < 10000:
-    #    start = time.time()
-    #   quick_sort(0, len(arr) - 1, arr)
-    #  stop = time.time()
-    # print("Timp Quick Sort:", stop - start, "secunde", end="\n\n")
-
+    if int(aux[0]) < 10000:
+        start = time.time()
+        quick_sort(0, len(arr) - 1, arr)
+        stop = time.time()
+        print("Timp Quick Sort:", stop - start, "secunde", end="\n\n")
+    else:
+        print("Quicksort da Recursion Error")
+        print()
     # ShellSort
     if int(aux[0]) < 10000:
         start = time.time()
         shellSort(arr)
         stop = time.time()
+        if arr == arr3:
+            print(f"Correct:{arr==arr3}")
+            print()
+        print("Timp Shell sort: ", stop - start, "secunde", end="\n\n")
         arr = aux1
-        print("Timp Shell Sort: ", stop - start, "secunde", end="\n\n")
     else:
         print("Dureaza prea mult Shell-Sort")
