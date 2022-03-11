@@ -270,7 +270,7 @@ for teste in f:
     # arr = list(np.random.randint(low = 0,high=int(aux[1]),size=int(aux[0])))
 
     c += 1
-    print(f"N={int(aux[0])} Max = {int(aux[1])} \n ")
+    print(f"Sir {c} \n N={int(aux[0])} Max = {int(aux[1])} \n ")
     print("Sir initial ", end="\n")
     # printList(arr)
 
@@ -279,9 +279,6 @@ for teste in f:
     mergeSort(arr)
     stop = time.time()
     arr = aux1
-    print("Sir sortat", end="\n")
-    printList(arr)
-    print()
     print("Timp Merge sort: ", stop - start, "secunde", end="\n\n")
 
     # Built-in Sorting Algorithm
