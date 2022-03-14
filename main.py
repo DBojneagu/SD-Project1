@@ -1,8 +1,7 @@
 import random
 import time
-import numpy as np
-import sys
 import copy
+
 
 def heapify(arr, n, i):
     largest = i
@@ -35,24 +34,21 @@ def heapSort(arr):
 def mergeSort(arr):
     if len(arr) > 1:
 
-        mid = len(arr) // 2
-
-        L = arr[:mid]
-
-        R = arr[mid:]
+        r = len(arr) // 2
+        L = arr[:r]
+        M = arr[r:]
 
         mergeSort(L)
-
-        mergeSort(R)
+        mergeSort(M)
 
         i = j = k = 0
 
-        while i < len(L) and j < len(R):
-            if L[i] < R[j]:
+        while i < len(L) and j < len(M):
+            if L[i] < M[j]:
                 arr[k] = L[i]
                 i += 1
             else:
-                arr[k] = R[j]
+                arr[k] = M[j]
                 j += 1
             k += 1
 
@@ -61,108 +57,99 @@ def mergeSort(arr):
             i += 1
             k += 1
 
-        while j < len(R):
-            arr[k] = R[j]
+        while j < len(M):
+            arr[k] = M[j]
             j += 1
             k += 1
 
 
-def shellSort(array, n):
+def shellSort(arr, n):
 
-    # Rearrange elements at each n/2, n/4, n/8, ... intervals
     interval = n // 2
     while interval > 0:
         for i in range(interval, n):
-            temp = array[i]
+            temp = arr[i]
             j = i
-            while j >= interval and array[j - interval] > temp:
-                array[j] = array[j - interval]
+            while j >= interval and arr[j - interval] > temp:
+                arr[j] = arr[j - interval]
                 j -= interval
 
-            array[j] = temp
+            arr[j] = temp
         interval //= 2
 
 
-def insertionSort(array):
-    for step in range(1, len(array)):
-        key = array[step]
-        j = step - 1
-        while j >= 0 and key < array[j]:
-            array[j + 1] = array[j]
+def insertionSort(arr):
+    for pas in range(1, len(arr)):
+        cheie = arr[pas]
+        j = pas - 1
+        while j >= 0 and cheie < arr[j]:
+            arr[j + 1] = arr[j]
             j = j - 1
-        array[j + 1] = key
+        arr[j + 1] = cheie
 
 
-def countingSort(array, place):
-    size = len(array)
+def countingSort(arr, loc):
+    size = len(arr)
     output = [0] * size
     count = [0] * 10
 
-    # Calculate count of elements
     for i in range(0, size):
-        index = array[i] // place
+        index = arr[i] // loc
         count[index % 10] += 1
 
-    # Calculate cumulative count
     for i in range(1, 10):
         count[i] += count[i - 1]
 
-    # Place the elements in sorted order
     i = size - 1
     while i >= 0:
-        index = array[i] // place
-        output[count[index % 10] - 1] = array[i]
+        index = arr[i] // loc
+        output[count[index % 10] - 1] = arr[i]
         count[index % 10] -= 1
         i -= 1
 
     for i in range(0, size):
-        array[i] = output[i]
+        arr[i] = output[i]
 
 
+def radixSort(arr):
 
-def radixSort(array):
+    elem_max = max(arr)
 
-    max_element = max(array)
-
-
-    place = 1
-    while max_element // place > 0:
-        countingSort(array, place)
-        place *= 10
+    loc = 1
+    while elem_max // loc > 0:
+        countingSort(arr, loc)
+        loc *= 10
 
 
-def bubbleSort(array):
-    for i in range(len(array)):
+def bubbleSort(arr):
+    for i in range(len(arr)):
+        for j in range(0, len(arr) - i - 1):
 
-        for j in range(0, len(array) - i - 1):
-
-            if array[j] > array[j + 1]:
-                temp = array[j]
-                array[j] = array[j + 1]
-                array[j + 1] = temp
+            if arr[j] > arr[j + 1]:
+                aux = arr[j]
+                arr[j] = arr[j + 1]
+                arr[j + 1] = aux
 
 
-def counting_sort(array, val_maxima):
+def counting_sort(arr, val_maxima):
 
     counts = [0] * (val_maxima + 1)
-    for item in array:
+    for item in arr:
         counts[item] += 1
 
-    num_items_before = 0
+    num_items_bef = 0
     for i, count in enumerate(counts):
-        counts[i] = num_items_before
-        num_items_before += count
+        counts[i] = num_items_bef
+        num_items_bef += count
 
-    sorted_list = [None] * len(array)
+    sorted_list = [None] * len(arr)
 
-    for item in array:
-
-        sorted_list[ counts[item] ] = item
-
-
+    for item in arr:
+        sorted_list[counts[item]] = item
         counts[item] += 1
 
     return sorted_list
+
 
 c = 0
 f = open("teste.in")
@@ -175,7 +162,6 @@ for teste in f:
 
     prearr = [random.randrange(1, int(aux[1])) for i in range(int(aux[0]))]
     arr = prearr
-    auxMerge = copy.deepcopy(prearr)
     auxRadix = copy.deepcopy(prearr)
     auxHeap = copy.deepcopy(prearr)
     auxShell = copy.deepcopy(prearr)
@@ -189,7 +175,6 @@ for teste in f:
     print(f"Sir {c} \n N={int(aux[0])} Max = {int(aux[1])} \n ")
 
     # MergeSort
-    arr = auxMerge
     start = time.time()
     mergeSort(arr)
     stop = time.time()
@@ -200,7 +185,7 @@ for teste in f:
     print("Timp Merge sort: ", stop - start, "secunde", end="\n\n")
 
     # Radix Sort
-    arr = auxRadix
+    print(arr)
     start = time.time()
     radixSort(arr)
     stop = time.time()
@@ -262,10 +247,10 @@ for teste in f:
         print(f"Correct = False")
     print("Timp Shell sort: ", stop - start, "secunde", end="\n\n")
 
-    #Couting Sort
+    # Couting Sort
     arr = auxCounting
     start = time.time()
-    arr =  counting_sort(arr,max(arr))
+    arr = counting_sort(arr, max(arr))
     stop = time.time()
     if arr == sorted(arr):
         print(f"Correct = True")
@@ -273,14 +258,12 @@ for teste in f:
         print(f"Correct = False")
     print("Timp Counting sort: ", stop - start, "secunde", end="\n\n")
 
-    #Python sort
+    # Python sort
     arr = auxPython
     start = time.time()
-    arr = sorted(arr)
     stop = time.time()
     if arr == sorted(arr):
         print(f"Correct = True")
     else:
         print(f"Correct = False")
     print("Timp Python Sort: ", stop - start, "secunde", end="\n\n")
-
