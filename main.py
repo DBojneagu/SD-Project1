@@ -4,43 +4,6 @@ import numpy as np
 import sys
 import copy
 
-
-def partition(array, low, high):
-
-    pivot = array[high]
-
-    i = low - 1
-
-    for j in range(low, high):
-        if array[j] <= pivot:
-
-            i = i + 1
-
-            (array[i], array[j]) = (array[j], array[i])
-
-    (array[i + 1], array[high]) = (array[high], array[i + 1])
-
-    return i + 1
-
-
-def partition(array, low, high):
-
-    pivot = array[high]
-
-    i = low - 1
-
-    for j in range(low, high):
-        if array[j] <= pivot:
-
-            i = i + 1
-
-            (array[i], array[j]) = (array[j], array[i])
-
-    (array[i + 1], array[high]) = (array[high], array[i + 1])
-
-    return i + 1
-
-
 def heapify(arr, n, i):
     largest = i
     l = 2 * i + 1
@@ -156,46 +119,16 @@ def countingSort(array, place):
         array[i] = output[i]
 
 
-# Main function to implement radix sort
+
 def radixSort(array):
-    # Get maximum element
+
     max_element = max(array)
 
-    # Apply counting sort to sort elements based on place value.
+
     place = 1
     while max_element // place > 0:
         countingSort(array, place)
         place *= 10
-
-
-def partition(start, end, array):
-
-    pivot_index = start
-    pivot = array[pivot_index]
-
-    while start < end:
-
-        while start < len(array) and array[start] <= pivot:
-            start += 1
-
-        while array[end] > pivot:
-            end -= 1
-
-        if start < end:
-            array[start], array[end] = array[end], array[start]
-
-    array[end], array[pivot_index] = array[pivot_index], array[end]
-
-    return end
-
-
-def quick_sort(start, end, array):
-    if start < end:
-
-        p = partition(start, end, array)
-
-        quick_sort(start, p - 1, array)
-        quick_sort(p + 1, end, array)
 
 
 def bubbleSort(array):
@@ -209,36 +142,24 @@ def bubbleSort(array):
                 array[j + 1] = temp
 
 
-def counting_sort(the_list, max_value):
+def counting_sort(array, val_maxima):
 
-    # Count the number of times each value appears.
-    # counts[0] stores the number of 0's in the input
-    # counts[4] stores the number of 4's in the input
-    # etc.
-    counts = [0] * (max_value + 1)
-    for item in the_list:
+    counts = [0] * (val_maxima + 1)
+    for item in array:
         counts[item] += 1
 
-    # Overwrite counts to hold the next index an item with
-    # a given value goes. So, counts[4] will now store the index
-    # where the next 4 goes, not the number of 4's our
-    # list has.
     num_items_before = 0
     for i, count in enumerate(counts):
         counts[i] = num_items_before
         num_items_before += count
 
-    # Output list to be filled in
-    sorted_list = [None] * len(the_list)
+    sorted_list = [None] * len(array)
 
-    # Run through the input list
-    for item in the_list:
+    for item in array:
 
-        # Place the item in the sorted list
         sorted_list[ counts[item] ] = item
 
-        # And, make sure the next item we see with the same value
-        # goes after the one we just placed
+
         counts[item] += 1
 
     return sorted_list
