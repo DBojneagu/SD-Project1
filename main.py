@@ -209,6 +209,40 @@ def bubbleSort(array):
                 array[j + 1] = temp
 
 
+def counting_sort(the_list, max_value):
+
+    # Count the number of times each value appears.
+    # counts[0] stores the number of 0's in the input
+    # counts[4] stores the number of 4's in the input
+    # etc.
+    counts = [0] * (max_value + 1)
+    for item in the_list:
+        counts[item] += 1
+
+    # Overwrite counts to hold the next index an item with
+    # a given value goes. So, counts[4] will now store the index
+    # where the next 4 goes, not the number of 4's our
+    # list has.
+    num_items_before = 0
+    for i, count in enumerate(counts):
+        counts[i] = num_items_before
+        num_items_before += count
+
+    # Output list to be filled in
+    sorted_list = [None] * len(the_list)
+
+    # Run through the input list
+    for item in the_list:
+
+        # Place the item in the sorted list
+        sorted_list[ counts[item] ] = item
+
+        # And, make sure the next item we see with the same value
+        # goes after the one we just placed
+        counts[item] += 1
+
+    return sorted_list
+
 c = 0
 f = open("teste.in")
 nrteste = f.readline()
@@ -226,6 +260,7 @@ for teste in f:
     auxShell = copy.deepcopy(prearr)
     auxBubble = copy.deepcopy(prearr)
     auxInsertion = copy.deepcopy(prearr)
+    auxCounting = copy.deepcopy(prearr)
 
     c += 1
 
@@ -266,28 +301,34 @@ for teste in f:
     print("Timp Heap sort: ", stop - start, "secunde", end="\n\n")
 
     # Insertion Sort
-    arr = auxInsertion
-    start = time.time()
-    insertionSort(arr)
-    stop = time.time()
-    if arr == sorted(arr):
-        print(f"Correct = True")
+    if int(aux[0]) < 10001:
+        arr = auxInsertion
+        start = time.time()
+        insertionSort(arr)
+        stop = time.time()
+        if arr == sorted(arr):
+            print(f"Correct = True")
+        else:
+            print(f"Correct = False")
+        print("Timp Insertion sort: ", stop - start, "secunde", end="\n\n")
     else:
-        print(f"Correct = False")
-    print("Timp Insertion sort: ", stop - start, "secunde", end="\n\n")
-
+        print("Prea mult pentru insertion")
+        print()
     # Bubble Sort
-    arr = auxBubble
-    start = time.time()
-    bubbleSort(arr)
-    stop = time.time()
-    if arr == sorted(arr):
-        print(f"Correct = True")
+    if int(aux[0]) < 10001:
+        arr = auxBubble
+        start = time.time()
+        bubbleSort(arr)
+        stop = time.time()
+        if arr == sorted(arr):
+            print(f"Correct = True")
+        else:
+            print(f"Correct = False")
+
+        print("Timp Bubble sort: ", stop - start, "secunde", end="\n\n")
     else:
-        print(f"Correct = False")
-
-    print("Timp Bubble sort: ", stop - start, "secunde", end="\n\n")
-
+        print("Prea mult pentru Bubble Sort")
+        print()
     # ShellSort
     arr = auxShell
     start = time.time()
@@ -298,3 +339,15 @@ for teste in f:
     else:
         print(f"Correct = False")
     print("Timp Shell sort: ", stop - start, "secunde", end="\n\n")
+
+    #Couting Sort
+    arr = auxCounting
+    start = time.time()
+    arr =  counting_sort(arr,max(arr))
+    stop = time.time()
+    if arr == sorted(arr):
+        print(f"Correct = True")
+    else:
+        print(f"Correct = False")
+    print("Timp Counting sort: ", stop - start, "secunde", end="\n\n")
+
