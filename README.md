@@ -1,4 +1,6 @@
 # SD-Project1
+This is my first data structures project for this semester. I had to compare 5 or more sorting algorithms with different inputs.
+The whole project was coded in python.
  
 ![SD project_1](https://user-images.githubusercontent.com/93039914/158220214-c7474720-f30b-4cda-9fa2-020da13445fa.jpg)
 ![SD project_2](https://user-images.githubusercontent.com/93039914/158220234-cd1e130a-c6c3-415e-9dca-a6fa4ac885be.jpg)
