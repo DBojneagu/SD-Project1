@@ -261,6 +261,7 @@ for teste in f:
     auxBubble = copy.deepcopy(prearr)
     auxInsertion = copy.deepcopy(prearr)
     auxCounting = copy.deepcopy(prearr)
+    auxPython = copy.deepcopy(prearr)
 
     c += 1
 
@@ -350,4 +351,15 @@ for teste in f:
     else:
         print(f"Correct = False")
     print("Timp Counting sort: ", stop - start, "secunde", end="\n\n")
+
+    #Python sort
+    arr = auxPython
+    start = time.time()
+    arr = sorted(arr)
+    stop = time.time()
+    if arr == sorted(arr):
+        print(f"Correct = True")
+    else:
+        print(f"Correct = False")
+    print("Timp Python Sort: ", stop - start, "secunde", end="\n\n")
 
