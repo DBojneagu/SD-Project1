@@ -5,14 +5,14 @@ import copy
 
 def heapify(arr, n, i):
     largest = i
-    l = 2 * i + 1
-    r = 2 * i + 2
+    stanga = 2 * i + 1
+    dreapta = 2 * i + 2
 
-    if l < n and arr[i] < arr[l]:
-        largest = l
+    if stanga < n and arr[i] < arr[stanga]:
+        largest = stanga
 
-    if r < n and arr[largest] < arr[r]:
-        largest = r
+    if dreapta < n and arr[largest] < arr[dreapta]:
+        largest = dreapta
 
     if largest != i:
         arr[i], arr[largest] = arr[largest], arr[i]
@@ -185,7 +185,7 @@ for teste in f:
     print("Timp Merge sort: ", stop - start, "secunde", end="\n\n")
 
     # Radix Sort
-    print(arr)
+    arr = auxRadix
     start = time.time()
     radixSort(arr)
     stop = time.time()
