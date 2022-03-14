@@ -302,7 +302,7 @@ for teste in f:
     print("Timp Heap sort: ", stop - start, "secunde", end="\n\n")
 
     # Insertion Sort
-    if int(aux[0]) < 10001:
+    if int(aux[0]) < 100001:
         arr = auxInsertion
         start = time.time()
         insertionSort(arr)
@@ -316,7 +316,7 @@ for teste in f:
         print("Prea mult pentru insertion")
         print()
     # Bubble Sort
-    if int(aux[0]) < 10001:
+    if int(aux[0]) < 100001:
         arr = auxBubble
         start = time.time()
         bubbleSort(arr)
